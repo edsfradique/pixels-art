@@ -84,9 +84,9 @@ const paintPixelsBoard = () => {
 const btnBorderChange = () => {
   const pixels = document.querySelectorAll('.pixel');
   btnBorder.addEventListener('click', () => {
-    btnBorder.textContent === '▣'
-      ? (btnBorder.textContent = '▢')
-      : (btnBorder.textContent = '▣');
+    btnBorder.textContent === '⬚'
+      ? (btnBorder.textContent = '▩')
+      : (btnBorder.textContent = '⬚');
     for (let i = 0; i < pixels.length; i += 1) {
       pixels[i].classList.toggle('pixel');
       pixels[i].classList.toggle('no-border');
@@ -154,16 +154,16 @@ $('#btn-print').click(() => {
   html2canvas(pixelsContainer).then((canvas) => {
     saveAs(canvas.toDataURL(), 'download.png');
   });
-  function saveAs(uri, filename) {
+  function saveAs(params1, params2) {
     const link = document.createElement('a');
     if (typeof link.download === 'string') {
-      link.href = uri;
-      link.download = filename;
+      link.href = params1;
+      link.download = params2;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
     } else {
-      window.open(uri);
+      window.open(params1);
     }
   }
 });
