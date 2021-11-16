@@ -52,6 +52,7 @@ h1 {
   height: 30px;
   border: 2px dashed black;
   border-radius: 50%;
+  cursor: pointer;
 }
 
 #choice-roll {
@@ -88,6 +89,7 @@ input {
   height: 30px;
   border: 2px dashed black;
   padding: 3px;
+  cursor: pointer;
 }
 
 button {
