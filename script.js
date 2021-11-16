@@ -1,3 +1,4 @@
+// declaração de variáveis
 const choiceColors = document.querySelectorAll('.choice-color');
 const pixelsContainer = document.querySelector('#pixels-container');
 const pixels = document.querySelectorAll('.pixels');
@@ -10,12 +11,12 @@ const inputColor = document.querySelector('#input-color');
 const btnBorder = document.querySelector('#btn-border');
 const btnPrint = document.querySelector('#btn-print');
 
-// Gera a cor aleatória
+// gera a cor aleatória
 const getNumberRandom = () => Math.trunc(Math.random() * 255) + 1;
 const getRandomColor = () =>
   `rgb(${getNumberRandom()}, ${getNumberRandom()}, ${getNumberRandom()})`;
 
-// Constroi o container de cores
+// constrói o container de cores
 const createColorContainer = () => {
   for (let i = 1; i < choiceColors.length - 2; i += 1) {
     choiceColors[i].style.backgroundColor = getRandomColor();
@@ -27,7 +28,7 @@ const createColorContainer = () => {
   }
 };
 
-// Seleciona a cor
+// seleciona a cor
 const clearSelectClass = (params) => {
   for (let i = 0; i < choiceColors.length; i += 1) {
     if (choiceColors[i] === choiceColors[params]) {
@@ -46,7 +47,7 @@ const selectColor = () => {
   }
 };
 
-// Constroi o quadro de pixels
+// constrói o quadro de pixels
 const createPixelsBoardLine = (params) => {
   const amountPixels = params;
   for (let i = 1; i <= amountPixels; i += 1) {
@@ -68,7 +69,7 @@ const createPixelsBoardColumn = (params) => {
   }
 };
 
-// Pinta o quadro de pixels
+// pinta o quadro de pixels
 const paintPixelsBoard = () => {
   const pixels = document.querySelectorAll('.pixel');
   for (let i = 0; i < pixels.length; i += 1) {
@@ -79,10 +80,13 @@ const paintPixelsBoard = () => {
   }
 };
 
-// Adiciona funções aos inputs e buttons
+// adiciona funções aos inputs e buttons
 const btnBorderChange = () => {
   const pixels = document.querySelectorAll('.pixel');
   btnBorder.addEventListener('click', () => {
+    btnBorder.textContent === '▣'
+      ? (btnBorder.textContent = '▢')
+      : (btnBorder.textContent = '▣');
     for (let i = 0; i < pixels.length; i += 1) {
       pixels[i].classList.toggle('pixel');
       pixels[i].classList.toggle('no-border');
@@ -145,6 +149,7 @@ const btnOffChange = () => {
   });
 };
 
+// html2canvas ~ print ~ download
 $('#btn-print').click(() => {
   html2canvas(pixelsContainer).then((canvas) => {
     saveAs(canvas.toDataURL(), 'download.png');
