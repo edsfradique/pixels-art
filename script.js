@@ -84,9 +84,9 @@ const paintPixelsBoard = () => {
 const btnBorderChange = () => {
   const pixels = document.querySelectorAll('.pixel');
   btnBorder.addEventListener('click', () => {
-    btnBorder.textContent === '▣'
-      ? (btnBorder.textContent = '▢')
-      : (btnBorder.textContent = '▣');
+    btnBorder.textContent === '⬚'
+      ? (btnBorder.textContent = '▩')
+      : (btnBorder.textContent = '⬚');
     for (let i = 0; i < pixels.length; i += 1) {
       pixels[i].classList.toggle('pixel');
       pixels[i].classList.toggle('no-border');

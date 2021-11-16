@@ -86,7 +86,8 @@ input {
 #input-color {
   width: 30px;
   height: 30px;
-  border-radius: 3px;
+  border: 2px dashed black;
+  padding: 3px;
 }
 
 button {
