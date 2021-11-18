@@ -84,9 +84,9 @@ const paintPixelsBoard = () => {
 const btnBorderChange = () => {
   const pixels = document.querySelectorAll('.pixel');
   btnBorder.addEventListener('click', () => {
-    btnBorder.textContent === '⬚'
-      ? (btnBorder.textContent = '▩')
-      : (btnBorder.textContent = '⬚');
+    btnBorder.textContent === '☐'
+      ? (btnBorder.textContent = '☑')
+      : (btnBorder.textContent = '☐');
     for (let i = 0; i < pixels.length; i += 1) {
       pixels[i].classList.toggle('pixel');
       pixels[i].classList.toggle('no-border');
@@ -137,14 +137,19 @@ const btnOffChange = () => {
   const h1 = document.querySelector('h1');
   btnOff.addEventListener('click', () => {
     h1.classList.toggle('hidden');
+    console.log(btnOff.textContent);
     if (btnOff.textContent === 'OFF') {
       btnOff.textContent = 'ON';
-      btnOff.classList.add('btn-success');
-      btnOff.classList.remove('btn-danger');
+      btnOff.classList.remove('bg-red-600');
+      btnOff.classList.remove('hover:bg-red-800');
+      btnOff.classList.add('bg-green-600');
+      btnOff.classList.add('hover:bg-green-800');
     } else {
       btnOff.textContent = 'OFF';
-      btnOff.classList.remove('btn-success');
-      btnOff.classList.add('btn-danger');
+      btnOff.classList.remove('bg-green-600');
+      btnOff.classList.remove('hover:bg-green-800');
+      btnOff.classList.add('bg-red-600');
+      btnOff.classList.add('hover:bg-red-800');
     }
   });
 };
