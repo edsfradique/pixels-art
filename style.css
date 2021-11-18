@@ -6,14 +6,12 @@
 }
 body {
   background-color: rgb(45, 45, 45);
-  display: flex;
-  justify-content: center;
-  align-content: center;
 }
 
 main {
   width: 1366px;
   height: auto;
+  margin: auto;
   margin-top: 2.5%;
   margin-bottom: 2.5%;
   background-color: white;
@@ -58,8 +56,8 @@ h1 {
 #choice-roll {
   width: 30px;
   height: 30px;
-  border-radius: 50%;
-  border: 2px dashed black;
+  text-align: center;
+  line-height: 30px;
 }
 
 #input-container {
@@ -67,33 +65,45 @@ h1 {
   margin-top: 20px;
   display: flex;
   justify-content: center;
+  align-content: center;
   padding: 10px;
 }
 
 input,
 button {
-  margin-right: 10px;
+  margin-left: 3.75px;
+  margin-right: 3.75px;
   font-weight: bold;
 }
 
 input {
-  font-size: 20px;
+  font-weight: bold;
+  width: 120px;
+  height: 40px;
 }
 
-input {
-  width: 120px;
+button {
+  width: 70px;
+  height: 40px;
+  line-height: 20px;
+}
+
+#btn-print svg {
+  margin: auto;
+}
+
+#btn-border {
+  font-size: 22px;
 }
 
 #input-color {
   width: 30px;
   height: 30px;
-  border: 2px dashed black;
-  padding: 3px;
   cursor: pointer;
 }
 
-button {
-  width: 60px;
+#input-color:focus {
+  outline: 0;
 }
 
 #pixels-container {
