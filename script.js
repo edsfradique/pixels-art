@@ -10,6 +10,7 @@ const btnOff = document.querySelector('#btn-off');
 const inputColor = document.querySelector('#input-color');
 const btnBorder = document.querySelector('#btn-border');
 const btnPrint = document.querySelector('#btn-print');
+const btnClear = document.querySelector('#btn-clear');
 
 // gera a cor aleatória
 const getNumberRandom = () => Math.trunc(Math.random() * 255) + 1;
@@ -31,11 +32,9 @@ const createColorContainer = () => {
 // seleciona a cor
 const clearSelectClass = (params) => {
   for (let i = 0; i < choiceColors.length; i += 1) {
-    if (choiceColors[i] === choiceColors[params]) {
-      choiceColors[i].classList.add('select');
-    } else {
-      choiceColors[i].classList.remove('select');
-    }
+    choiceColors[i] === choiceColors[params]
+      ? choiceColors[i].classList.add('select')
+      : choiceColors[i].classList.remove('select');
   }
 };
 
@@ -50,6 +49,7 @@ const selectColor = () => {
 // constrói o quadro de pixels
 const createPixelsBoardLine = (params) => {
   const amountPixels = params;
+  localStorage.setItem('Lines', params);
   for (let i = 1; i <= amountPixels; i += 1) {
     const createDivLine = document.createElement('div');
     pixelsContainer.appendChild(createDivLine);
@@ -60,6 +60,7 @@ const createPixelsBoardLine = (params) => {
 const createPixelsBoardColumn = (params) => {
   const amountPixels = params;
   const createDivLine = document.querySelectorAll('.lines');
+  localStorage.setItem('Columns', params);
   for (let k = 1; k <= amountPixels; k += 1) {
     for (let i = 0; i < createDivLine.length; i += 1) {
       const createDivColumn = document.createElement('div');
@@ -76,6 +77,7 @@ const paintPixelsBoard = () => {
     pixels[i].addEventListener('click', (event) => {
       const select = document.querySelector('.select');
       event.target.style.backgroundColor = select.style.backgroundColor;
+      localStorage.setItem(`${[i]}`, select.style.backgroundColor);
     });
   }
 };
@@ -84,9 +86,9 @@ const paintPixelsBoard = () => {
 const btnBorderChange = () => {
   const pixels = document.querySelectorAll('.pixel');
   btnBorder.addEventListener('click', () => {
-    btnBorder.textContent === '☐'
-      ? (btnBorder.textContent = '☑')
-      : (btnBorder.textContent = '☐');
+    // btnBorder.textContent === '☐'
+    //   ? (btnBorder.textContent = '☑')
+    //   : (btnBorder.textContent = '☐');
     for (let i = 0; i < pixels.length; i += 1) {
       pixels[i].classList.toggle('pixel');
       pixels[i].classList.toggle('no-border');
@@ -112,6 +114,7 @@ COLUMNS - MIN VALUE : 1 - MAX VALUE : 100`);
     } else {
       clearBoard();
       createColorContainer();
+      localStorage.clear();
       createPixelsBoardLine(inputLines.value);
       createPixelsBoardColumn(inputColumns.value);
       selectColor();
@@ -137,19 +140,14 @@ const btnOffChange = () => {
   const h1 = document.querySelector('h1');
   btnOff.addEventListener('click', () => {
     h1.classList.toggle('hidden');
-    console.log(btnOff.textContent);
     if (btnOff.textContent === 'OFF') {
       btnOff.textContent = 'ON';
-      btnOff.classList.remove('bg-red-600');
-      btnOff.classList.remove('hover:bg-red-800');
-      btnOff.classList.add('bg-green-600');
-      btnOff.classList.add('hover:bg-green-800');
+      btnOff.classList.remove('bg-red-600', 'hover:bg-red-800');
+      btnOff.classList.add('bg-green-600', 'hover:bg-green-800');
     } else {
       btnOff.textContent = 'OFF';
-      btnOff.classList.remove('bg-green-600');
-      btnOff.classList.remove('hover:bg-green-800');
-      btnOff.classList.add('bg-red-600');
-      btnOff.classList.add('hover:bg-red-800');
+      btnOff.classList.remove('bg-green-600', 'hover:bg-green-800');
+      btnOff.classList.add('bg-red-600', 'hover:bg-red-800');
     }
   });
 };
@@ -173,11 +171,34 @@ $('#btn-print').click(() => {
   }
 });
 
+const reloadBoard = () => {
+  clearBoard();
+  if (localStorage.length === 0) {
+    createPixelsBoardLine(72);
+    createPixelsBoardColumn(36);
+  } else {
+    createPixelsBoardLine(localStorage.getItem('Lines'));
+    createPixelsBoardColumn(localStorage.getItem('Columns'));
+  }
+  const pixels = document.querySelectorAll('.pixel');
+  for (let i = 0; i < pixels.length; i += 1) {
+    pixels[i].style.backgroundColor = localStorage.getItem(i);
+  }
+};
+
+const btnClearChange = () => {
+  btnClear.addEventListener('click', () => {
+    localStorage.clear();
+    reloadBoard();
+    paintPixelsBoard();
+    btnBorderChange();
+  });
+};
+
 // window.onload
 window.onload = () => {
+  reloadBoard();
   createColorContainer();
-  createPixelsBoardLine(72);
-  createPixelsBoardColumn(36);
   selectColor();
   paintPixelsBoard();
   chanceBoardSize();
@@ -185,4 +206,5 @@ window.onload = () => {
   inputColorChange();
   btnOffChange();
   btnBorderChange();
+  btnClearChange();
 };

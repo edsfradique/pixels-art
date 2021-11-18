@@ -109,9 +109,9 @@ button {
 #pixels-container {
   margin: auto;
   margin-top: 20px;
-  width: max-content;
-  height: max-content;
-  border: 1px solid black;
+  width: min-content;
+  height: min-content;
+  border: 0.1px solid black;
   display: flex;
   justify-content: center;
 }
