@@ -2,15 +2,19 @@
 const choiceColors = document.querySelectorAll('.choice-color');
 const pixelsContainer = document.querySelector('#pixels-container');
 const pixels = document.querySelectorAll('.pixels');
+const overlay = document.querySelector('#overlay');
+const modal = document.querySelector('#modal');
 const inputLines = document.querySelector('#input-lines');
 const inputColumns = document.querySelector('#input-columns');
+const inputColor = document.querySelector('#input-color');
 const btnOK = document.querySelector('#btn-ok');
 const btnR = document.querySelector('#choice-roll');
 const btnOff = document.querySelector('#btn-off');
-const inputColor = document.querySelector('#input-color');
 const btnBorder = document.querySelector('#btn-border');
 const btnPrint = document.querySelector('#btn-print');
 const btnClear = document.querySelector('#btn-clear');
+const btnYes = document.querySelector('#btn-yes');
+const btnNo = document.querySelector('#btn-no');
 
 // gera a cor aleatória
 const getNumberRandom = () => Math.trunc(Math.random() * 255) + 1;
@@ -86,9 +90,6 @@ const paintPixelsBoard = () => {
 const btnBorderChange = () => {
   const pixels = document.querySelectorAll('.pixel');
   btnBorder.addEventListener('click', () => {
-    // btnBorder.textContent === '☐'
-    //   ? (btnBorder.textContent = '☑')
-    //   : (btnBorder.textContent = '☐');
     for (let i = 0; i < pixels.length; i += 1) {
       pixels[i].classList.toggle('pixel');
       pixels[i].classList.toggle('no-border');
@@ -117,6 +118,8 @@ COLUMNS - MIN VALUE : 1 - MAX VALUE : 100`);
       localStorage.clear();
       createPixelsBoardLine(inputLines.value);
       createPixelsBoardColumn(inputColumns.value);
+      inputLines.value = '';
+      inputColumns.value = '';
       selectColor();
       paintPixelsBoard();
       btnBorderChange();
@@ -152,6 +155,46 @@ const btnOffChange = () => {
   });
 };
 
+const reloadBoard = () => {
+  clearBoard();
+  if (localStorage.length === 0) {
+    createPixelsBoardLine(72);
+    createPixelsBoardColumn(36);
+  } else {
+    createPixelsBoardLine(localStorage.getItem('Lines'));
+    createPixelsBoardColumn(localStorage.getItem('Columns'));
+  }
+  const pixels = document.querySelectorAll('.pixel');
+  for (let i = 0; i < pixels.length; i += 1) {
+    pixels[i].style.backgroundColor = localStorage.getItem(i);
+  }
+};
+
+const btnYesChange = () => {
+  btnYes.addEventListener('click', () => {
+    localStorage.clear();
+    reloadBoard();
+    paintPixelsBoard();
+    btnBorderChange();
+    overlay.classList.toggle('hidden');
+    modal.classList.toggle('hidden');
+  });
+};
+
+const btnNoChange = () => {
+  btnNo.addEventListener('click', () => {
+    overlay.classList.toggle('hidden');
+    modal.classList.toggle('hidden');
+  });
+};
+
+const btnClearChange = () => {
+  btnClear.addEventListener('click', () => {
+    overlay.classList.toggle('hidden');
+    modal.classList.toggle('hidden');
+  });
+};
+
 // html2canvas ~ print ~ download
 $('#btn-print').click(() => {
   html2canvas(pixelsContainer).then((canvas) => {
@@ -171,30 +214,6 @@ $('#btn-print').click(() => {
   }
 });
 
-const reloadBoard = () => {
-  clearBoard();
-  if (localStorage.length === 0) {
-    createPixelsBoardLine(72);
-    createPixelsBoardColumn(36);
-  } else {
-    createPixelsBoardLine(localStorage.getItem('Lines'));
-    createPixelsBoardColumn(localStorage.getItem('Columns'));
-  }
-  const pixels = document.querySelectorAll('.pixel');
-  for (let i = 0; i < pixels.length; i += 1) {
-    pixels[i].style.backgroundColor = localStorage.getItem(i);
-  }
-};
-
-const btnClearChange = () => {
-  btnClear.addEventListener('click', () => {
-    localStorage.clear();
-    reloadBoard();
-    paintPixelsBoard();
-    btnBorderChange();
-  });
-};
-
 // window.onload
 window.onload = () => {
   reloadBoard();
@@ -207,4 +226,6 @@ window.onload = () => {
   btnOffChange();
   btnBorderChange();
   btnClearChange();
+  btnYesChange();
+  btnNoChange();
 };
